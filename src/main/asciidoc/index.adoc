@@ -1,17 +1,17 @@
 = Sample API Documentation
-Vojtech Ruzicka<myfakemail@gmail.com>
-1.0.0, 30/5/2018
+Lê văn Thành<lethanh9398@gmail.com>
+1.0.0, 28/03/2020
 :toc: left
 :sectnums:
 
 == Introduction
-This is an example of Spring REST Docs generated documentation.
+Đây là một example cho việc tạo docs từ việc viết test 
 
-== Persons API
-Collection of CRUD API endpoints used to manipulate persons registered in the application.
+== User API
+Các docs cho User API
 
-=== Get Person By Id
-Obtains a specific person registered in the application by its unique identifier.
+=== Get User By Id
+TÌm kiếm User bởi Id, case thành công
 
 ==== Path Parameters
 include::{snippets}/api/users/get-by-id/path-parameters.adoc[]
@@ -30,8 +30,8 @@ include::{snippets}/api/users/get-by-id/curl-request.adoc[]
 
 
 
-=== Get all Person
-Obtains a specific person registered in the application by its unique identifier.
+=== Get all User
+Lấy tất cả danh sách user
 
 ==== Path Parameters
 include::{snippets}/api/users/get-all/path-parameters.adoc[]
@@ -47,3 +47,23 @@ include::{snippets}/api/users/get-all/http-response.adoc[]
 
 ==== CURL sample
 include::{snippets}/api/users/get-all/curl-request.adoc[]
+
+
+
+
+=== Get User get by id not found
+APi tìm kiếm user bởi id, nhưng không tìm thấy
+==== Path Parameters
+include::{snippets}/api/users/get-by-id-not-found/path-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/api/users/get-by-id-not-found/response-fields.adoc[]
+
+==== Sample Request
+include::{snippets}/api/users/get-by-id-not-found/http-request.adoc[]
+
+==== Sample Response
+include::{snippets}/api/users/get-by-id-not-found/http-response.adoc[]
+
+==== CURL sample
+include::{snippets}/api/users/get-by-id-not-found/curl-request.adoc[]

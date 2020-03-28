@@ -43,12 +43,32 @@ public class UserControllerTest {
                         pathParameters(parameterWithName("id")
                                 .description("Identifier of the person to be obtained.")),
                         responseFields(
-                                fieldWithPath("id")
-                                        .description("Id của user"),
-                                fieldWithPath("firstName")
-                                        .description("firstName của user"),
-                                fieldWithPath("lastName")
-                                        .description("lastName của user")
+                                fieldWithPath("status")
+                                        .description("Trạng thái của request"),
+                                fieldWithPath("data")
+                                        .description("data nếu có"),
+                                fieldWithPath("data.id")
+                                        .description("id"),
+                                fieldWithPath("data.firstName")
+                                        .description("firstName"),
+                                fieldWithPath("data.lastName")
+                                        .description("lastName")
+                        )
+                ));
+    }
+    @Test
+    public void getByNotFound() throws Exception {
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/users/{id}",10000))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andDo(document("api/users/get-by-id-not-found",
+                        pathParameters(parameterWithName("id")
+                                .description("Identifier of the person to be obtained.")),
+                        responseFields(
+                                fieldWithPath("status")
+                                        .description("Trạng thái của request"),
+                                fieldWithPath("data")
+                                        .description("data nếu có")
                         )
                 ));
     }
@@ -60,13 +80,16 @@ public class UserControllerTest {
                 .andDo(document("api/users/get-all",
                         pathParameters(),
                         responseFields(
-                                fieldWithPath("[]").description("An array"),
-                                fieldWithPath("[].id")
-                                        .description("Id của user"),
-                                fieldWithPath("[].firstName")
-                                        .description("firstName của user"),
-                                fieldWithPath("[].lastName")
-                                        .description("lastName của user")
+                                fieldWithPath("status")
+                                        .description("Trạng thái của request"),
+                                fieldWithPath("data")
+                                        .description("data nếu có"),
+                                fieldWithPath("data[].id")
+                                        .description("id"),
+                                fieldWithPath("data[].firstName")
+                                        .description("firstName"),
+                                fieldWithPath("data[].lastName")
+                                        .description("lastName")
                         )
                 ));
     }
