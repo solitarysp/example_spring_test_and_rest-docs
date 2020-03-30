@@ -1,9 +1,13 @@
 package com.lethanh98.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lethanh98.dto.request.UserRequestDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -14,8 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -25,6 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 public class UserControllerTest {
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext,
@@ -34,9 +39,41 @@ public class UserControllerTest {
                 .apply(documentationConfiguration(restDocumentation))
                 .build();
     }
+
+    @Test
+    public void save() throws Exception {
+        UserRequestDTO user = new UserRequestDTO();
+        user.setFirstName("le");
+        user.setLastName("thanh");
+        this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/users/new")
+                .content(this.objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andDo(document("api/users/new-user",
+                        requestFields(
+                                fieldWithPath("firstName")
+                                        .description("firstName"),
+                                fieldWithPath("lastName")
+                                        .description("lastName")),
+                        responseFields(
+                                fieldWithPath("status")
+                                        .description("Trạng thái của request"),
+                                fieldWithPath("data")
+                                        .description("data nếu có"),
+                                fieldWithPath("data.id")
+                                        .description("id"),
+                                fieldWithPath("data.firstName")
+                                        .description("firstName"),
+                                fieldWithPath("data.lastName")
+                                        .description("lastName")
+                        )
+                ));
+    }
+
     @Test
     public void getByIdOK() throws Exception {
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/users/{id}",1))
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/users/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(document("api/users/get-by-id",
@@ -56,9 +93,10 @@ public class UserControllerTest {
                         )
                 ));
     }
+
     @Test
     public void getByNotFound() throws Exception {
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/users/{id}",10000))
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/users/{id}", 10000))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(document("api/users/get-by-id-not-found",
@@ -72,6 +110,7 @@ public class UserControllerTest {
                         )
                 ));
     }
+
     @Test
     public void getALL() throws Exception {
         this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/users"))

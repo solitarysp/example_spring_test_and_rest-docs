@@ -60,3 +60,23 @@ include::{snippets}/api/users/get-by-id-not-found/http-response.adoc[]
 
 ==== CURL sample
 include::{snippets}/api/users/get-by-id-not-found/curl-request.adoc[]
+
+
+
+=== Tạo mới một user
+API tạo mới một user
+
+==== Body Parameters
+include::{snippets}/api/users/new-user/request-fields.adoc[]
+
+==== Response Fields
+include::{snippets}/api/users/new-user/response-fields.adoc[]
+
+==== Sample Request
+include::{snippets}/api/users/new-user/http-request.adoc[]
+
+==== Sample Response
+include::{snippets}/api/users/new-user/http-response.adoc[]
+
+==== CURL sample
+include::{snippets}/api/users/new-user/curl-request.adoc[]
