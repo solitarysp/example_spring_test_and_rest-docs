@@ -53,6 +53,7 @@ include::{snippets}/api/users/get-all/curl-request.adoc[]
 
 === Get User get by id not found
 APi tìm kiếm user bởi id, nhưng không tìm thấy
+
 ==== Path Parameters
 include::{snippets}/api/users/get-by-id-not-found/path-parameters.adoc[]
 
