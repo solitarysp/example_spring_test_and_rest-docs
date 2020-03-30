@@ -67,5 +67,4 @@ not create URIs themselves, instead they should use the above-described links to
 
 
 [[resources-index]]
-== Index
 include::User.adoc[]
