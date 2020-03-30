@@ -19,8 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,7 +40,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void save() throws Exception {
+    public void saveBody() throws Exception {
         UserRequestDTO user = new UserRequestDTO();
         user.setFirstName("le");
         user.setLastName("thanh");
@@ -56,6 +55,36 @@ public class UserControllerTest {
                                         .description("firstName"),
                                 fieldWithPath("lastName")
                                         .description("lastName")),
+                        responseFields(
+                                fieldWithPath("status")
+                                        .description("Trạng thái của request"),
+                                fieldWithPath("data")
+                                        .description("data nếu có"),
+                                fieldWithPath("data.id")
+                                        .description("id"),
+                                fieldWithPath("data.firstName")
+                                        .description("firstName"),
+                                fieldWithPath("data.lastName")
+                                        .description("lastName")
+                        )
+                ));
+    }
+
+    @Test
+    public void saveParam() throws Exception {
+        this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/users")
+                .param("firstName", "le")
+                .param("lastName", "thanh")
+                .content("{}").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andDo(document("api/users/new-user-param",
+                        requestParameters(
+                                parameterWithName("firstName")
+                                .description("firstName"),
+                                parameterWithName("lastName")
+                                .description("tên cuối")),
                         responseFields(
                                 fieldWithPath("status")
                                         .description("Trạng thái của request"),

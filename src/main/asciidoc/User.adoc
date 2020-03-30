@@ -80,3 +80,23 @@ include::{snippets}/api/users/new-user/http-response.adoc[]
 
 ==== CURL sample
 include::{snippets}/api/users/new-user/curl-request.adoc[]
+
+
+=== Tạo mới một user trên param
+API tạo mới một user
+
+==== Parameters
+include::{snippets}/api/users/new-user-param/request-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/api/users/new-user-param/response-fields.adoc[]
+
+==== Sample Request
+include::{snippets}/api/users/new-user-param/http-request.adoc[]
+
+==== Sample Response
+include::{snippets}/api/users/new-user-param/http-response.adoc[]
+
+==== CURL sample
+include::{snippets}/api/users/new-user-param/curl-request.adoc[]
+
