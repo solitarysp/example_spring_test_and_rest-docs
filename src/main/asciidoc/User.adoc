@@ -100,3 +100,28 @@ include::{snippets}/api/users/new-user-param/http-response.adoc[]
 ==== CURL sample
 include::{snippets}/api/users/new-user-param/curl-request.adoc[]
 
+==== các error code
+
+
+|===
+|Stt |Code |Mô tả
+
+|1
+|0
+|Thành công
+
+|2
+|1
+|Thất Bại
+
+|3
+|2
+|TimeOut
+|===
+
+
+==== Flow logic API
+- Bước 1 : Client gửi request kèm theo data lên server
+- Bước 2 : Server validate data từ lên, 2 trường *firstName* và *lastName* là bắt buộc
+- Bước 3 : Server tiến hành save vào DB
+- Bước 4 : kết thúc lồng và trả về kết quả cho client
